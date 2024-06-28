@@ -46,12 +46,35 @@ public class ProdutosDAO {
     }
     
     public ArrayList<ProdutosDTO> listarProdutos(){
+     
+        conn = new conectaDAO().connectDB();
         
-        return listagem;
+        String sql = "select*from produtos";
+        
+        try{
+            prep = this.conn.prepareStatement(sql);
+            
+            resultset = prep.executeQuery();
+            
+            ArrayList<ProdutosDTO> listaProdutos = new ArrayList<>();
+            
+            while(resultset.next()){
+                ProdutosDTO p = new ProdutosDTO();
+                
+                p.setId(resultset.getInt("id"));
+                p.setNome(resultset.getString("nome"));
+                p.setValor(resultset.getInt("valor"));
+                p.setStatus(resultset.getString("status"));
+                
+                listaProdutos.add(p);
+            }
+            return listaProdutos;
+        }catch(SQLException ex){
+            System.out.println("Não foi possível recuperar os dados do banco de dados");
+            System.out.println(ex.getMessage());
+            return null;
+        }
     }
-    
-    
-    
         
 }
 

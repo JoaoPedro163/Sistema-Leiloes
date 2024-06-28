@@ -22,7 +22,7 @@ public class ProdutosDAO {
     ResultSet resultset;
     ArrayList<ProdutosDTO> listagem = new ArrayList<>();
     
-    public void cadastrarProduto (ProdutosDTO produto){
+    public boolean cadastrarProduto (ProdutosDTO produto){
         //conn = new conectaDAO().connectDB();
         conn = new conectaDAO().connectDB();
         
@@ -36,9 +36,12 @@ public class ProdutosDAO {
             prep.executeUpdate();
             System.out.println("Produto cadastrado com sucesso");
             
+            return true;
+            
         }catch(SQLException ex){
             System.out.println("Não foi possível cadastrar o produto");
             System.out.println(ex.getMessage());
+            return false;
         }
     }
     
